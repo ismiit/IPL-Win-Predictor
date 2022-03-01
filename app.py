@@ -1,10 +1,9 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-import tensorflow as tf
+import pickle
 import time
+from datetime import datetime
 from sklearn.preprocessing import StandardScaler
 
 st.title('IPL WINNER PREDICTOR')
@@ -90,18 +89,19 @@ X_test = scale.fit_transform(X_test.reshape(1,-1))
 
 probability = 0
 if st.button('Predict'):
-    model = tf.keras.models.load_model('model')
+    model = pickle.load(open('class_model.pkl','rb'))
     y_pred = model.predict(X_test)
     my_bar = st.progress(0)
     with st.spinner('Predicting'):
         time.sleep(2)
-    prob1 = (y_pred[0][teamA])*100
-    prob2 = 100-prob1
+    probability = model.predict_proba(X_test)
+    prob1 = (probability[0][y_pred][0])*100
+    prob2 = 100 - prob1
     if prob1 > prob2:
-        st.success('Winning Team is :: {} == {} '.format(team1,prob1))
-        st.error('Losing Team is :: {} == {} '.format(team2,prob2))
+        st.success('Winning Team is [ {} ] :::::: {}% '.format(team1,prob1))
+        st.error('Losing Team is [ {} ] :::::: {}% '.format(team2,prob2))
     elif prob1 < prob2:
-        st.success('Winning Team is :: {} == {}'.format(team2, prob2))
-        st.error('Losing Team is :: {} == {} '.format(team1, prob1))
+        st.success('Winning Team is [ {} ] :::::: {}%'.format(team2, prob2))
+        st.error('Losing Team is [ {} ] :::::: {}%'.format(team1, prob1))
     else:
         st.success('Oh That is NEW! Both Team TIE !')
