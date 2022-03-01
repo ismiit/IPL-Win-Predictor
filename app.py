@@ -62,8 +62,7 @@ else:
     city = 1
     neutral_venue = 0
 
-result_margin = 17.32
-runs_wickets = 1
+
 
 winner_toss = teams_dict[toss_winner]
 
@@ -82,14 +81,15 @@ else:
 
 year = abs(2022 - year_input)
 
-X_test = np.array([result_margin, city, venue, neutral_venue, toss_decision, runs_wickets, eliminator, teamA, teamB, winner_toss, year])
-scale = StandardScaler()
-X_test = scale.fit_transform(X_test.reshape(1,-1))
 
+model = pickle.load(open('class_model.pkl','rb'))
 
-probability = 0
 if st.button('Predict'):
-    model = pickle.load(open('class_model.pkl','rb'))
+    result_margin = np.random.uniform(0.5,140.5)
+    runs_wickets = np.random.randint(0,1)
+    X_test = np.array([result_margin, city, venue, neutral_venue, toss_decision, runs_wickets, eliminator, teamA, teamB, winner_toss,year])
+    scale = StandardScaler()
+    X_test = X_test.reshape((1,-1))
     y_pred = model.predict(X_test)
     my_bar = st.progress(0)
     with st.spinner('Predicting'):
