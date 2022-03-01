@@ -5,20 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import tensorflow as tf
 import time
-from datetime import datetime
-from sklearn.impute import SimpleImputer
-from sklearn.compose import ColumnTransformer
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.naive_bayes import GaussianNB
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.svm import SVC
-from sklearn.ensemble import RandomForestClassifier
-from keras.models import Sequential
-from keras.layers import Dense, BatchNormalization
-from sklearn.metrics import accuracy_score,classification_report,confusion_matrix
-from sklearn.model_selection import cross_val_score
-from sklearn.preprocessing import OneHotEncoder
 
 st.title('IPL WINNER PREDICTOR')
 
