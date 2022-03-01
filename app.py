@@ -90,7 +90,7 @@ X_test = scale.fit_transform(X_test.reshape(1,-1))
 
 probability = 0
 if st.button('Predict'):
-    model = tf.load_model('model')
+    model = tf.keras.models.load_model('model')
     y_pred = model.predict(X_test)
     my_bar = st.progress(0)
     with st.spinner('Predicting'):
